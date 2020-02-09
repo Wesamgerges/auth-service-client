@@ -21,7 +21,6 @@ import loading from '~/components/Loading.vue'
 import { mapMutations, mapGetters, mapState } from 'vuex'
 export default {
     layout: 'plain',
-    // middleware: ['authenticated'],
     components: {
         login,
         loading

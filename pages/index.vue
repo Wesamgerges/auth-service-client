@@ -4,8 +4,8 @@
     <div v-if="$auth.hasScope('admin')">
       <h1 > Admin area </h1>
       <div>
-        <h1 class="title"> Full Auth </h1>
-        <h2 class="subtitle"> V2 </h2>
+        <h1 class="title"> Auth Service </h1>
+        <h2 class="subtitle"> V4.0 </h2>
       
         <b-button @click.prevent="logout" variant="outline-success">Logout</b-button>       
       </div>
@@ -19,6 +19,7 @@
 <script>
 
 export default {
+  // auth: false,
   methods: {
     async logout() {
       await this.$auth.logout()

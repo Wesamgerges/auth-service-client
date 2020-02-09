@@ -13,11 +13,12 @@ module.exports = {
         // plugins: ['~/plugins/auth.js'],
         cookie: false,
         scopeKey: 'role',
+        tokenRequired: true,
         strategies: {
         local: {
             endpoints: {
-                login:  { url: 'login', method: 'post', propertyName: 'data.token'  },
-                user:   { url: 'user' , method: 'get' , propertyName: 'data'        },
+                login:  { url: '/login', method: 'post', propertyName: 'data.token'  },
+                user:   { url: '/user' , method: 'get' , propertyName: 'data'        },
                 logout: false
             }
         },
@@ -32,11 +33,13 @@ module.exports = {
         },
     },
     redirect: {
-        "logout": "/login", 
-        "callback": "/auth/callback",
-        home: '/login'       
+        logout: "/login", 
+        // callback: "/auth/callback",
+        home: '/',
+        login: "/login"       
     },
     maxAge: 86400,
      // watchLoggedIn: true,
      // rewriteRedirects: true
+     resetOnError: true   
 }

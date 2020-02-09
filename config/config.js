@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 import build from './build.js'
 import auth from './auth.js'
 import router from './router.js'

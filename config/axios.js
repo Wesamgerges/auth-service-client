@@ -16,5 +16,5 @@
 ** See https://axios.nuxtjs.org/options
 */
 module.exports = {
-    baseURL: process.env.API_BASE_URL
+    baseURL: process.env.API_URL,
 }

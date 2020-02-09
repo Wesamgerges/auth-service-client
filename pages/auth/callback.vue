@@ -10,7 +10,7 @@ export default {
     auth: false,
     layout: 'plain',
     async mounted() {
-        authentication.callback(this)
+        authenticator.callback(this)
     },
 }
 </script>

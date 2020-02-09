@@ -72,4 +72,4 @@ class Authenticator {
     }
 }
 
-export default new Authentication();
+export default new Authenticator();

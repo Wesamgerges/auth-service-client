@@ -13,8 +13,8 @@
 module.exports = {
     mode: 'spa',
     env: {
-        baseUrl: process.env.HOST,
-        apiBaseUrl: process.env.API_URL,
+        // baseUrl: process.env.HOST,
+        // apiBaseUrl: process.env.API_URL,
     },    
    
     server: {

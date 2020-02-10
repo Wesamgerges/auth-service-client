@@ -14,7 +14,7 @@
 /*
 ** Axios module configuration
 ** See https://axios.nuxtjs.org/options
-*/
+*/          
 module.exports = {
-    baseURL: process.env.API_URL,
+    baseURL: process.env.SERVER_URL || "http://localhost:3333",
 }

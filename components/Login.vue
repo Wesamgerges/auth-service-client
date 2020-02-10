@@ -4,7 +4,7 @@
         <div class="card text-center mx-auto w-100" >
             <h5 class="card-header"> {{ label }} </h5>
             <div class="card-body">
-                <form @submit.prevent="login('local')">
+                <form @submit.prevent="submit('local')">
                     <div class="form-group pb-2"> 
                         <b-alert v-model="showError" variant="danger" @dismissed="$emit('dismissed')" dismissible>
                             {{ errorMessage }}
@@ -74,8 +74,8 @@ export default {
         },
     },
     methods: {
-        login(provider) {
-            this.$emit('login', { provider, user: this.user })
+        submit(provider) {
+            this.$emit(this.register ? 'login': 'register', { provider, user: this.user })
         },
         ...mapMutations('user', ['reset'])
     },

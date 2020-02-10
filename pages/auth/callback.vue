@@ -5,12 +5,13 @@
 </div>
 </template>
 <script>
-import authenticator from '~/services/Authenticator.js'
+import Authenticator from '~/services/Authenticator.js'
 export default {
     auth: false,
     layout: 'plain',
     async mounted() {
-        authenticator.callback(this)
+        const authenticator = new Authenticator(this)
+        authenticator.callback()
     },
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
 <div>
     <div v-if="!loading">
-        <login :register="register" :errorMessage="errorMessage" @dismissed="errorMessage=''" @login="login"></login>
+        <login :register="isRegister" :errorMessage="errorMessage" @dismissed="errorMessage=''" @login="login" @register="register"></login>
         <div class="row">
             <div style="max-width: 400px;" class="col d-flex justify-content-end mt-2 mx-auto">
-                <a href="/login" @click.prevent="register=!register"> {{ messge }} </a>
+                <a :href="'login?' + (isRegister? 'register=1': 'login=1')" @click.prevent="isRegister=!isRegister"> {{ message }} </a>
             </div>
         </div>
     </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Authenticator from '~/services/Authenticator.js'
 import login from '~/components/Login.vue'
 import loading from '~/components/Loading.vue'
 
@@ -27,32 +28,47 @@ export default {
     },
     data() {
         return {
-            register: false,
-            messge: "Not registered yet?",
+            isRegister: false,
+            message: "Not registered yet?",
             errorMessage: "",
             loading: false,
         }
     },
-    mounted(){
+    mounted() {
+        this.isRegister = this.$route.query.register
         this.errorMessage = localStorage.getItem("errorMessage")
         localStorage.removeItem("errorMessage")
     },
     watch: {
-        register(v) {
+        isRegister(v) {
             this.setIsRegister(v)
-            this.messge = v ? "Already registered?" : "Not registered yet?"
+            this.message = v ? "Already registered?" : "Not registered yet?"
         }
     },
     methods: {
-        async login( { provider, user } ) {
-            if(this.register && provider == 'local'){
+        async register( { provider, user } ) {
+            console.log("register,,,,,,,")
+           const authenticator = new Authenticator(this)
+            if(provider == 'local'){
                 try {
-                  //  await authService.register( user )
-                } catch(e) {
-                    this.errorMessage = e
+                   await authenticator.register( user )
+                } catch( error ) {
+                    this.errorMessage = error
                     return;
                 }
             }
+        },
+
+        async login( { provider, user } ) {
+            const authenticator = new Authenticator(this)
+            // if(this.register && provider == 'local'){
+            //     try {
+            //        await authenticator.register( user )
+            //     } catch( error ) {
+            //         this.errorMessage = error
+            //         return;
+            //     }
+            // }
             // await authService.loginWith(provider, user)
             // .catch( error => {
             //     this.errorMessage = error

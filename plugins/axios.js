@@ -4,7 +4,8 @@ export default function ({ $axios, redirect }) {
       if (code === 401) {
           throw new Error( "E_OAUTH_STATE_MISMATCH" )
       } else {
-        throw new Error( error )
+          console.dir(error)
+        throw new Error( error.response.data.message || error )
       }
     })
   }

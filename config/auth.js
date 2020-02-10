@@ -17,20 +17,20 @@ module.exports = {
         strategies: {
         local: {
             endpoints: {
-                login:  { url: '/login', method: 'post', propertyName: 'data.token'  },
-                user:   { url: '/user' , method: 'get' , propertyName: 'data'        },
+                login:  { url: '/auth/login', method: 'post', propertyName: 'data.token'  },
+                user:   { url: '/auth/user' , method: 'get' , propertyName: 'data'        },
                 logout: false
             }
         },
-        facebook: {
-            client_id: process.env.FB_CLIENT_ID,
-            userinfo_endpoint: false,
-            scope: ['public_profile', 'email'],
-            //redirect_uri: 'http://localhost:3000/callback'
-        },
-        google: {
-            client_id: process.env.GOOGLE_CLIENT_ID,
-        },
+        // facebook: {
+        //     client_id: process.env.FB_CLIENT_ID,
+        //     userinfo_endpoint: false,
+        //     scope: ['public_profile', 'email'],
+        //     //redirect_uri: 'http://localhost:3000/callback'
+        // },
+        // google: {
+        //     client_id: process.env.GOOGLE_CLIENT_ID,
+        // },
     },
     redirect: {
         logout: "/login", 

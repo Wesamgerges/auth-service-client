@@ -75,7 +75,7 @@ export default {
     },
     methods: {
         submit(provider) {
-            this.$emit(this.register ? 'login': 'register', { provider, user: this.user })
+            this.$emit(this.register ? 'register' : 'login', { provider, user: this.user })
         },
         ...mapMutations('user', ['reset'])
     },

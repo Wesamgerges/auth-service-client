@@ -41,13 +41,14 @@ export default {
     },
     watch: {
         isRegister(v) {
+            this.errorMessage = ""
+            localStorage.removeItem("errorMessage")
             this.setIsRegister(v)
             this.message = v ? "Already registered?" : "Not registered yet?"
         }
     },
     methods: {
-        async register( { provider, user } ) {
-            console.log("register,,,,,,,")
+        async register( { provider, user } ) {           
            const authenticator = new Authenticator(this)
             if(provider == 'local'){
                 try {

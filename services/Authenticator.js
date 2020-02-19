@@ -17,10 +17,15 @@ export default class Authenticator {
     //     this.axios = $axios
     // }
 
-    async loginWith( provider, user ) {
-        await this.auth.loginWith(provider, { data: { provider: user.provider, user } })
+    async loginWith( user ) {
+        await this.app.$auth.loginWith("local",  {
+            data: {
+              email: user.email,
+              password: user.password
+            }
+          } )
             .catch(async (error) => {
-                await this.auth.logout()
+                await this.app.$auth.logout()
                 throw this.getErrorMesssage(error)
             });
     }

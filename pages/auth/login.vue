@@ -70,10 +70,11 @@ export default {
             //         return;
             //     }
             // }
-            // await authService.loginWith(provider, user)
-            // .catch( error => {
-            //     this.errorMessage = error
-            // })
+            await authenticator.loginWith(user)
+            .then()
+            .catch( error => {
+                this.errorMessage = error
+            })
             this.loading = false
             this.$router.push('/')
         },

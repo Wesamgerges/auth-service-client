@@ -27,7 +27,7 @@
                     </div>
                     <hr class="hr-text" data-content="OR">
                     <div class="form-group pb-2">   
-                        <a class="btn btn-social btn-google form-control form-control-lg text-center" :href="serverUrl+'/auth/login/google'">
+                        <a class="btn btn-social btn-google form-control form-control-lg text-center" :href="serverUrl + '/auth/social/google'">
                             <font-awesome-icon :icon="['fab', 'google']"/> {{ label}} with Google
                         </a>                                            
                     </div>

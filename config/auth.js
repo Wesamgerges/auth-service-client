@@ -18,23 +18,13 @@ module.exports = {
         local: {
             endpoints: {
                 login:  { url: '/auth/login', method: 'post', propertyName: 'data.token'  },
-                user:   { url: 'api/v1/auth/user' , method: 'get' , propertyName: 'data'        },
+                user:   { url: 'auth/user' , method: 'get' , propertyName: 'data'        },
                 logout: false
             }
         },
-        // facebook: {
-        //     client_id: process.env.FB_CLIENT_ID,
-        //     userinfo_endpoint: false,
-        //     scope: ['public_profile', 'email'],
-        //     //redirect_uri: 'http://localhost:3000/callback'
-        // },
-        // google: {
-        //     client_id: process.env.GOOGLE_CLIENT_ID,
-        // },
     },
     redirect: {
         logout: "/login", 
-        // callback: "/auth/callback",
         home: '/',
         login: "/login"       
     },

@@ -19,10 +19,9 @@ module.exports = {
         name: 'login',
         path: '/login',
         component: resolve(__dirname, '../pages/auth/login.vue')
-      },
-      {
-        name: 'register',
-        path: '/login?register=1',
+      },{
+        path: '/register',
+        redirect: { name: 'login', query: { register: '1' } },      
         component: resolve(__dirname, '../pages/auth/login.vue')
       })
     }

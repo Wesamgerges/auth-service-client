@@ -12,10 +12,6 @@ export default class Authenticator {
             E_OAUTH_STATE_MISMATCH:     "Something went wrong. Please re-login"
         };
     }
-    // async setContext({$auth, $axios}) {
-    //     this.auth = $auth;
-    //     this.axios = $axios
-    // }
 
     async loginWith( user ) {
         await this.app.$auth.loginWith("local",  {
@@ -31,36 +27,30 @@ export default class Authenticator {
     }
 
     async register( user ) {       
-        localStorage.removeItem("isRegister")
+        // localStorage.removeItem("isRegister")
         try {
-            await this.app.$axios.post('/auth/register', user)
-        } catch( error ){
+            const { data, status } = await this.app.$axios.post('/auth/register', user)  
+            if(status !== "success") {
+                throw new Error(data.data)
+            }       
+            this.app.$auth.setToken( 'local', data.data );
+            this.app.$auth.setStrategy( 'local' );
+            await this.app.$auth.fetchUser()                  
+            this.app.$router.push( '/' )  
+        } catch (error ){
             throw this.getErrorMesssage( error.message || error )
         }
     }
 
-    // async setUserDataFromAuth( store, provider ) {
-    //     let user = {
-    //         email:      this.auth.user.email,
-    //         first_name: this.auth.user.given_name,
-    //         last_name:  this.auth.user.family_name,
-    //         accessToken:this.auth.getToken(provider),
-    //         password:   this.auth.getToken(provider).substr(7, 40),
-    //         provider: provider
-    //     }
-    //     store.state.user.data = user
-    //     return user
-    // }
-
     async callback() {        
         try {
-            const { token, error } = this.app.$route.query
+            const { data, status } = this.app.$route.query
             // Throw an error, if the backen reported one.
-            if(error) {
-                throw new Error(error)
+            if(status !== "success") {
+                throw new Error(data)
             }
             // Update the token and fetch user details.
-            this.app.$auth.setToken( 'local', token );
+            this.app.$auth.setToken( 'local', data );
             this.app.$auth.setStrategy( 'local' );
             await this.app.$auth.fetchUser()                  
             this.app.$router.push( '/' )           

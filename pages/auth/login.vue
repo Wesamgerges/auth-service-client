@@ -49,27 +49,19 @@ export default {
     },
     methods: {
         async register( { provider, user } ) {           
-           const authenticator = new Authenticator(this)
-            if(provider == 'local'){
-                try {
-                   await authenticator.register( user )
-                } catch( error ) {
-                    this.errorMessage = error
-                    return;
-                }
+           const authenticator = new Authenticator(this)          
+            try {
+                await authenticator.register( user )
+                this.$router.push('/')
+            } catch( error ) {
+                this.errorMessage = error
+                return;
             }
+
         },
 
         async login( { provider, user } ) {
             const authenticator = new Authenticator(this)
-            // if(this.register && provider == 'local'){
-            //     try {
-            //        await authenticator.register( user )
-            //     } catch( error ) {
-            //         this.errorMessage = error
-            //         return;
-            //     }
-            // }
             await authenticator.loginWith(user)
             .then()
             .catch( error => {

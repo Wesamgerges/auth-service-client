@@ -30,10 +30,11 @@ export default class Authenticator {
         // localStorage.removeItem("isRegister")
         try {
             const { data, status } = await this.app.$axios.post('/auth/register', user)  
+
             if(status !== "success") {
-                throw new Error(data.data)
+                throw new Error(data.token)
             }       
-            this.app.$auth.setToken( 'local', data.data );
+            this.app.$auth.setToken( 'local', data.token );
             this.app.$auth.setStrategy( 'local' );
             await this.app.$auth.fetchUser()                  
             this.app.$router.push( '/' )  
@@ -44,13 +45,13 @@ export default class Authenticator {
 
     async callback() {        
         try {
-            const { data, status } = this.app.$route.query
+            const { token, type, message, status } = this.app.$route.query
             // Throw an error, if the backen reported one.
-            if(status !== "success") {
-                throw new Error(data)
+            if(status) {
+                throw new Error(message)
             }
             // Update the token and fetch user details.
-            this.app.$auth.setToken( 'local', data );
+            this.app.$auth.setToken( 'local', type + " " + token );
             this.app.$auth.setStrategy( 'local' );
             await this.app.$auth.fetchUser()                  
             this.app.$router.push( '/' )           

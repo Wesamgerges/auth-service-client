@@ -16,49 +16,47 @@ export default class Authenticator {
     async loginWith( user ) {
         await this.app.$auth.loginWith("local",  {
             data: {
-              email: user.email,
-              password: user.password
+                email: user.email,
+                password: user.password
             }
-          } )
-            .catch(async (error) => {
-                await this.app.$auth.logout()
-                throw this.getErrorMesssage(error)
-            });
+        }).catch((error) => {
+            this.reset(error)
+        });
     }
 
-    async register( user ) {       
-        // localStorage.removeItem("isRegister")
-        try {
-            const { data, status } = await this.app.$axios.post('/auth/register', user)  
+    async setAuthUser({token, type, message, status}) {
+        if(status == "error") {
+            throw new Error(message)
+        }       
+        this.app.$auth.setToken( 'local', type + " " + token );
+        this.app.$auth.setStrategy( 'local' );
+        await this.app.$auth.fetchUser()                  
+        this.app.$router.push( '/' )  
+    }
 
-            if(status !== "success") {
-                throw new Error(data.token)
-            }       
-            this.app.$auth.setToken( 'local', data.token );
-            this.app.$auth.setStrategy( 'local' );
-            await this.app.$auth.fetchUser()                  
-            this.app.$router.push( '/' )  
-        } catch (error ){
-            throw this.getErrorMesssage( error.message || error )
+    reset(error) {
+        this.app.$auth.setToken( 'local', "" );  
+        localStorage.setItem("errorMessage", this.getErrorMesssage(error.message || error))
+        
+        this.app.$router.push( '/login' )
+        throw this.getErrorMesssage(error.message || error)
+    }
+
+    async register(user){
+        try {
+            const {data} = await this.app.$axios.post('/auth/register', user)  
+            await this.setAuthUser(data)
+        }catch(e){
+            this.reset(e)
         }
     }
 
-    async callback() {        
+    async callback() {
         try {
-            const { token, type, message, status } = this.app.$route.query
-            // Throw an error, if the backen reported one.
-            if(status) {
-                throw new Error(message)
-            }
-            // Update the token and fetch user details.
-            this.app.$auth.setToken( 'local', type + " " + token );
-            this.app.$auth.setStrategy( 'local' );
-            await this.app.$auth.fetchUser()                  
-            this.app.$router.push( '/' )           
-        } catch( error ) {
-            this.app.$auth.setToken( 'local', "" );  
-            localStorage.setItem("errorMessage", this.getErrorMesssage(error.message || error))
-            this.app.$router.push( '/login' )
+            const data = this.app.$route.query
+            await this.setAuthUser(data)
+        } catch(e) {
+            this.reset(e)
         }
     }
 
@@ -68,5 +66,3 @@ export default class Authenticator {
             : error
     }
 }
-
-// export default new Authenticator();

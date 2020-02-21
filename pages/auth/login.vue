@@ -57,13 +57,11 @@ export default {
                 this.errorMessage = error
                 return;
             }
-
         },
 
         async login( { provider, user } ) {
             const authenticator = new Authenticator(this)
             await authenticator.loginWith(user)
-            .then()
             .catch( error => {
                 this.errorMessage = error
             })

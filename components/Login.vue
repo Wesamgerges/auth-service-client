@@ -53,15 +53,20 @@ export default {
     ],
     data() {
         return {
-            label: "Login",
-            showError: false,
+            user: {
+                first_name: "",
+                last_name:  "",
+                email:      "",
+                password:   ""
+            },
+            label:      "Login",
+            showError:  false,
         }
     },
     computed: {
         serverUrl() {
             return process.env.SERVER_URL
         },
-        ...mapState('user', { user: 'data' })
     },
     watch: {
         register(v) {
@@ -74,10 +79,17 @@ export default {
         },
     },
     methods: {
-        submit(provider) {
-            this.$emit(this.register ? 'register' : 'login', { provider, user: this.user })
+        submit() {
+            this.$emit(this.register ? 'register' : 'login', { user: this.user })
         },
-        ...mapMutations('user', ['reset'])
+       reset() {
+            this.user = {
+                first_name: "",
+                last_name:  "",
+                email:      "",
+                password:   ""
+            }
+        }
     },
 }
 </script>

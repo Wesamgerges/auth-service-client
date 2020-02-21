@@ -43,12 +43,11 @@ export default {
         isRegister(v) {
             this.errorMessage = ""
             localStorage.removeItem("errorMessage")
-            this.setIsRegister(v)
             this.message = v ? "Already registered?" : "Not registered yet?"
         }
     },
     methods: {
-        async register( { provider, user } ) {           
+        async register( { user } ) {           
            const authenticator = new Authenticator(this)          
             try {
                 await authenticator.register( user )
@@ -59,7 +58,7 @@ export default {
             }
         },
 
-        async login( { provider, user } ) {
+        async login( { user } ) {
             const authenticator = new Authenticator(this)
             await authenticator.loginWith(user)
             .catch( error => {
@@ -68,7 +67,6 @@ export default {
             this.loading = false
             this.$router.push('/')
         },
-        ...mapMutations('user', ['setIsRegister', 'reset']),
     }
 }
 </script>

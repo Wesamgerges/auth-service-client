@@ -2,18 +2,20 @@
 
 /*
 |--------------------------------------------------------------------------
-| Axios Configuration
+| Router Configuration
 |--------------------------------------------------------------------------
 |
-| This is general purpose file to define configuration for axios.
-| The below config is for the ally provider. Make sure to save it inside
-| config/axios.js file.
+| This is general purpose file to define configuration for router.
+| The below config is for the ally provider.
 |
 |
 */
+// only add `router.base = '/<repository-name>/'` if `DEPLOY_ENV` is `GH_PAGES`
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+    base: '/auth-service-client/'  
+} : {}
 
 module.exports = {
-    base: '/auth-service-client/',
     middleware: ['auth'],
     extendRoutes(routes, resolve) {
       routes.push({
@@ -25,5 +27,6 @@ module.exports = {
         redirect: { name: 'login', query: { register: '1' } },      
         component: resolve(__dirname, '../pages/auth/login.vue')
       })
-    }
+    },
+    ...routerBase
 }

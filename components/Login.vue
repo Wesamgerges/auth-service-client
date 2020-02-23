@@ -65,7 +65,7 @@ export default {
     },
     computed: {
         serverUrl() {
-            return process.env.SERVER_URL
+            return process.env.serverUrl
         },
     },
     watch: {

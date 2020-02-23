@@ -15,6 +15,7 @@ module.exports = {
     env: {
         // baseUrl: process.env.HOST,
         // apiBaseUrl: process.env.API_URL,
+        serverUrl:  process.env.SERVER_URL || "http://localhost:3333"
     },    
    
     server: {

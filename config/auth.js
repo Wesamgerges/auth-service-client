@@ -28,7 +28,7 @@ module.exports = {
         home: '/',
         login: "/login"       
     },
-    maxAge: 86400,
+    maxAge: 3600,
      // watchLoggedIn: true,
      // rewriteRedirects: true
      resetOnError: true   

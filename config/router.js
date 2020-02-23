@@ -13,6 +13,7 @@
 */
 
 module.exports = {
+    base: '/auth-service-client/',
     middleware: ['auth'],
     extendRoutes(routes, resolve) {
       routes.push({

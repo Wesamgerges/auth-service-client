@@ -1,6 +1,5 @@
 export default class Authenticator {
     constructor(app){
-        // this.$auth = auth;
         this.app = app
         this.readableErrorMessages = {
             E_PASSWORD_MISMATCH:        "Invalid email or password.",

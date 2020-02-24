@@ -60,7 +60,7 @@ export default {
 
         async login( { user } ) {
             const authenticator = new Authenticator(this)
-            await authenticator.loginWith(user)
+            await authenticator.login(user)
             .catch( error => {
                 this.errorMessage = error
             })

@@ -24,10 +24,7 @@ export default class Authenticator {
         });
     }
 
-    async setAuthUser({token, type, message, status}) {
-        if(status == "error") {
-            throw new Error(message)
-        }       
+    async setAuthUser({token, type}) {   
         this.app.$auth.setToken( 'local', type + " " + token );
         this.app.$auth.setStrategy( 'local' );
         await this.app.$auth.fetchUser()                  
@@ -54,6 +51,9 @@ export default class Authenticator {
     async callback() {
         try {
             const data = this.app.$route.query
+            if(data.status == "error") {
+                throw new Error(data.message)
+            }    
             await this.setAuthUser(data)
         } catch(e) {
             this.reset(e)

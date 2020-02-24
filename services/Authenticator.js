@@ -12,7 +12,7 @@ export default class Authenticator {
         };
     }
 
-    async loginWith( user ) {
+    async login( user ) {
         await this.app.$auth.loginWith("local",  {
             data: {
                 email: user.email,

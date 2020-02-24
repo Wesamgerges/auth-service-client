@@ -27,12 +27,12 @@
                     </div>
                     <hr class="hr-text" data-content="OR">
                     <div class="form-group pb-2">   
-                        <a class="btn btn-social btn-google form-control form-control-lg text-center" :href="serverUrl + '/auth/social/google'">
+                        <a class="btn btn-social btn-google form-control form-control-lg text-center" :href="serverUrl + '/auth/redirect/' + label.toLowerCase() +'/google'">
                             <font-awesome-icon :icon="['fab', 'google']"/> {{ label}} with Google
                         </a>                                            
                     </div>
                     <div class="form-group">                       
-                        <button class="btn btn-social btn-facebook form-control form-control-lg text-center" @click.prevent="login('facebook')">
+                        <button class="btn btn-social btn-facebook form-control form-control-lg text-center" :href="serverUrl + '/auth/redirect/' + label.toLowerCase() +'/facebook'">
                             <font-awesome-icon :icon="['fab', 'facebook']"/> {{ label }} with Facebook
                         </button>  
                     </div>

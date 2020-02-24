@@ -22,6 +22,26 @@ export default class Authenticator {
             this.reset(error)
         });
     }
+    async register(user){
+        try {
+            const {data} = await this.app.$axios.post('/auth/register', user)  
+            await this.setAuthUser(data)
+        } catch(error) {
+            this.reset(error)
+        }
+    }
+  
+    async callback() {
+        try {
+            const data = this.app.$route.query
+            if(data.status == "error") {
+                throw new Error(data.message)
+            }    
+            await this.setAuthUser(data)
+        } catch(e) {
+            this.reset(e)
+        }
+    }
 
     async setAuthUser({token, type}) {   
         this.app.$auth.setToken( 'local', type + " " + token );
@@ -36,27 +56,6 @@ export default class Authenticator {
         
         this.app.$router.push( '/login' )
         throw this.getErrorMesssage(error.message || error)
-    }
-
-    async register(user){
-        try {
-            const {data} = await this.app.$axios.post('/auth/register', user)  
-            await this.setAuthUser(data)
-        } catch(error) {
-            this.reset(error)
-        }
-    }
-
-    async callback() {
-        try {
-            const data = this.app.$route.query
-            if(data.status == "error") {
-                throw new Error(data.message)
-            }    
-            await this.setAuthUser(data)
-        } catch(e) {
-            this.reset(e)
-        }
     }
 
     getErrorMesssage(error) {

@@ -25,7 +25,7 @@ export default class Authenticator {
     async register(user){
         try {
             const {data} = await this.app.$axios.post('/auth/register', user)  
-            await this.setAuthUser(data)
+            await this.setAuthUser(data.token)
         } catch(error) {
             this.reset(error)
         }

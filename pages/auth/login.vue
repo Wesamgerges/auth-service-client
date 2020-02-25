@@ -35,12 +35,13 @@ export default {
         }
     },
     mounted() {
-        this.isRegister = this.$route.query.register
+        if(this.$route.query.register)
+            this.isRegister = this.$route.query.register
         this.errorMessage = localStorage.getItem("errorMessage")
         localStorage.removeItem("errorMessage")
     },
     watch: {
-        isRegister(v) {
+        isRegister(v) {          
             this.errorMessage = ""
             localStorage.removeItem("errorMessage")
             this.message = v ? "Already registered?" : "Not registered yet?"
